@@ -1,12 +1,30 @@
-import React from "react"
+import React, { useState, useEffect, useRef } from "react"
 import "./alert.css"
 import warninngIcon from "../static/images/warning.svg"
 import Toast from "./Toast"
 
-function Alert() {
+function Alert({ close, showPopup }) {
+  const [popup, setPopup] = useState(false)
+  const popupRef = useRef(null)
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickForPopup)
+    return () => {
+      document.removeEventListener("mousedown", handleClickForPopup)
+    }
+  }, [popup])
+
+  const handleClickForPopup = (event) => {
+    const { current } = popupRef
+
+    if (showPopup && current && !current.contains(event.target)) {
+      close()
+    }
+  }
+
   return (
     <div className='alert-wrap'>
-      <div className='alert-container'>
+      <div className='alert-container' ref={popupRef}>
         <div className='alert-box-wrap'>
           <div className='alert-icon'>
             <img src={warninngIcon} alt='' />
@@ -19,7 +37,7 @@ function Alert() {
           </div>
         </div>
         <div className='alert-confirm'>
-          <div className='close-alert'>
+          <div className='close-alert' onClick={() => close()}>
             <p>Cancel</p>
           </div>
           <div className='confirm-alert'>
@@ -27,7 +45,7 @@ function Alert() {
           </div>
         </div>
       </div>
-      <Toast />
+      {/* <Toast /> */}
     </div>
   )
 }

@@ -10,6 +10,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
 }
 
 .alert-container {
@@ -62,6 +65,7 @@
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid #dde3ed;
+  cursor: pointer;
 }
 
 .close-alert {
